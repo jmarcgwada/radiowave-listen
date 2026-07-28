@@ -212,13 +212,18 @@
     var stream = st.url_resolved || st.url || '';
     var mixed = location.protocol === 'https:' && /^http:\/\//i.test(stream);
 
+    // Logo (favicon) — comes from the same byuuid response as the stream. Always try to load it;
+    // the emoji placeholder stays until the image actually loads (img.onload swaps it in), and a
+    // failure (onerror) simply keeps the emoji. On an HTTPS page we upgrade an http:// favicon to
+    // https:// so hosts that serve both (many do) still show their logo instead of being blocked.
     var logo = $('logo');
-    if (st.favicon && !(location.protocol === 'https:' && /^http:\/\//i.test(st.favicon))) {
+    if (st.favicon) {
+      var favUrl = (location.protocol === 'https:') ? st.favicon.replace(/^http:\/\//i, 'https://') : st.favicon;
       var img = new Image();
       img.className = 'logo'; img.alt = st.name || '';
       img.onload = function () { logo.replaceWith(img); img.id = 'logo'; };
       img.onerror = function () {};
-      img.src = st.favicon;
+      img.src = favUrl;
     }
 
     $('eyebrow').textContent = 'En écoute';
