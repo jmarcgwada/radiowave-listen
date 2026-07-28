@@ -6,7 +6,6 @@
 <title>RadioWave — Écouter en ligne</title>
 <meta name="theme-color" content="#0B1E3D" />
 <meta name="description" content="Écoutez cette station de radio en ligne, sans installation." />
-<!-- Open Graph so the WhatsApp link preview shows a nice card -->
 <meta property="og:title" content="RadioWave — Écouter en ligne" />
 <meta property="og:description" content="Touchez pour écouter cette station directement dans votre navigateur." />
 <meta property="og:type" content="website" />
@@ -19,7 +18,6 @@
     --line: rgba(255,255,255,0.14);
     --text: #ffffff;
     --muted: rgba(255,255,255,0.66);
-    --danger: #FF453A;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; height: 100%; }
@@ -28,46 +26,48 @@
     color: var(--text);
     background: radial-gradient(120% 120% at 50% 0%, var(--bg1) 0%, var(--bg0) 60%, #06132a 100%);
     min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; align-items: center;
+    padding: 22px 18px calc(28px + env(safe-area-inset-bottom));
   }
   .brand {
     display: flex; align-items: center; gap: 8px;
-    font-weight: 800; font-size: 20px; letter-spacing: .3px;
-    margin-bottom: 22px;
+    font-weight: 800; font-size: 20px; letter-spacing: .3px; margin: 6px 0 18px;
   }
   .brand .dot { font-size: 22px; }
   .card {
-    width: 100%; max-width: 360px;
+    width: 100%; max-width: 380px;
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: 24px;
-    padding: 26px 22px;
+    padding: 24px 22px;
     text-align: center;
     backdrop-filter: blur(6px);
   }
-  .logo {
-    width: 148px; height: 148px; border-radius: 22px; object-fit: cover;
-    background: rgba(255,255,255,0.08);
-    border: 3px solid rgba(255,255,255,0.28);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 64px; margin: 0 auto 16px;
+  /* ---- Poster ---- */
+  .poster { margin-bottom: 16px; }
+  .logoWrap {
+    width: 176px; height: 176px; margin: 0 auto 16px;
+    border-radius: 26px; position: relative;
   }
-  .eyebrow { color: var(--muted); font-size: 13px; font-weight: 600; }
-  .name { font-size: 23px; font-weight: 800; margin: 4px 0 6px; line-height: 1.2; }
+  .logoWrap::after {
+    content: ""; position: absolute; inset: -14px; border-radius: 34px; z-index: -1;
+    background: radial-gradient(closest-side, rgba(0,122,255,0.5), transparent 75%);
+    filter: blur(6px);
+  }
+  .logo {
+    width: 176px; height: 176px; border-radius: 26px; object-fit: cover;
+    background: rgba(255,255,255,0.08);
+    border: 3px solid rgba(255,255,255,0.30);
+    display: flex; align-items: center; justify-content: center; font-size: 74px;
+  }
+  .eyebrow { color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: .4px; }
+  .name { font-size: 25px; font-weight: 800; margin: 4px 0 6px; line-height: 1.18; }
   .meta { color: var(--muted); font-size: 13px; min-height: 18px; }
   .play {
-    margin: 22px auto 6px;
-    width: 88px; height: 88px; border-radius: 50%;
-    border: none; cursor: pointer;
-    background: var(--primary);
-    color: #fff;
+    margin: 20px auto 6px; width: 88px; height: 88px; border-radius: 50%;
+    border: none; cursor: pointer; background: var(--primary); color: #fff;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 10px 30px rgba(0,122,255,0.45);
-    transition: transform .08s ease;
+    box-shadow: 0 10px 30px rgba(0,122,255,0.45); transition: transform .08s ease;
   }
   .play:active { transform: scale(0.94); }
   .play svg { width: 38px; height: 38px; display: block; }
@@ -75,38 +75,66 @@
   .spinner {
     width: 34px; height: 34px; border-radius: 50%;
     border: 3px solid rgba(255,255,255,0.25); border-top-color: #fff;
-    animation: spin 0.8s linear infinite;
+    animation: spin 0.8s linear infinite; margin: 6px auto;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   .fallback {
-    display: none;
-    margin-top: 16px; padding: 14px;
-    background: rgba(255,69,58,0.12);
-    border: 1px solid rgba(255,69,58,0.35);
-    border-radius: 14px;
-    font-size: 13px; color: #ffd9d6; text-align: left; line-height: 1.5;
+    display: none; margin-top: 16px; padding: 14px;
+    background: rgba(255,69,58,0.12); border: 1px solid rgba(255,69,58,0.35);
+    border-radius: 14px; font-size: 13px; color: #ffd9d6; text-align: left; line-height: 1.5;
   }
   .fallback.show { display: block; }
-  .btns { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+  /* ---- Share section ---- */
+  .divider { height: 1px; background: var(--line); margin: 22px 0 18px; }
+  .shareTitle { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 14px; }
+  .qrBox {
+    background: #fff; width: 188px; height: 188px; margin: 0 auto 14px;
+    border-radius: 18px; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  .qrBox canvas { width: 160px; height: 160px; image-rendering: pixelated; }
+  .qrBox .fallbackTxt { color: #0B1E3D; font-size: 12px; padding: 0 10px; }
+  .linkRow {
+    display: flex; align-items: center; gap: 8px; margin: 0 0 14px;
+    background: rgba(0,0,0,0.25); border: 1px solid var(--line);
+    border-radius: 12px; padding: 10px 12px;
+  }
+  .linkRow .url {
+    flex: 1; text-align: left; font-size: 12.5px; color: var(--muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: ui-monospace, Menlo, Consolas, monospace;
+  }
+  .btns { display: flex; flex-direction: column; gap: 10px; }
+  .row2 { display: flex; gap: 10px; }
+  .row2 .btn { flex: 1; }
   .btn {
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    text-decoration: none; cursor: pointer;
-    padding: 13px 18px; border-radius: 999px; font-size: 15px; font-weight: 700;
-    border: 1px solid var(--line); color: #fff; background: rgba(255,255,255,0.05);
+    text-decoration: none; cursor: pointer; border: 1px solid var(--line);
+    padding: 12px 14px; border-radius: 999px; font-size: 14px; font-weight: 700;
+    color: #fff; background: rgba(255,255,255,0.06); white-space: nowrap;
   }
+  .btn.small { padding: 9px 12px; font-size: 13px; }
   .btn.primary { background: var(--primary); border-color: var(--primary); }
-  .foot { color: var(--muted); font-size: 12px; margin-top: 20px; text-align: center; max-width: 360px; line-height: 1.5; }
+  .foot { color: var(--muted); font-size: 12px; margin-top: 20px; text-align: center; max-width: 380px; line-height: 1.5; }
   a { color: #7ab8ff; }
+  .toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px);
+    background: #111; color: #fff; padding: 10px 18px; border-radius: 999px; font-size: 13px;
+    opacity: 0; pointer-events: none; transition: all .25s ease; border: 1px solid var(--line);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
   <div class="brand"><span class="dot">📻</span><span>RadioWave</span></div>
 
   <div class="card" id="card">
-    <div class="logo" id="logo">📻</div>
-    <div class="eyebrow" id="eyebrow">Station partagée</div>
-    <div class="name" id="name">Chargement…</div>
-    <div class="meta" id="meta"></div>
+    <!-- Poster -->
+    <div class="poster">
+      <div class="logoWrap"><div class="logo" id="logo">📻</div></div>
+      <div class="eyebrow" id="eyebrow">Station partagée</div>
+      <div class="name" id="name">Chargement…</div>
+      <div class="meta" id="meta"></div>
+    </div>
 
     <button class="play" id="play" aria-label="Lecture" style="display:none">
       <svg id="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -115,7 +143,21 @@
 
     <div class="fallback" id="fallback"></div>
 
-    <div class="btns" id="btns"></div>
+    <!-- Share -->
+    <div id="share" style="display:none">
+      <div class="divider"></div>
+      <div class="shareTitle">Partager cette station</div>
+      <div class="qrBox" id="qrBox"><span class="fallbackTxt" id="qrFallback">QR indisponible</span></div>
+      <div class="linkRow">
+        <span class="url" id="urlText"></span>
+      </div>
+      <div class="row2">
+        <button class="btn small" id="dlQr"><span>⬇️</span><span>Télécharger le QR</span></button>
+        <button class="btn small" id="copyLink"><span>🔗</span><span>Copier le lien</span></button>
+      </div>
+    </div>
+
+    <div class="btns" id="btns" style="margin-top:16px"></div>
   </div>
 
   <div class="foot">
@@ -123,8 +165,11 @@
     Installez <b>RadioWave</b> pour accéder à des milliers de radios du monde entier.
   </div>
 
+  <div class="toast" id="toast"></div>
   <audio id="audio" preload="none" crossorigin="anonymous"></audio>
 
+<!-- Client-side QR generator (small, MIT). Page still works without it (QR simply hidden). -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script>
 (function () {
   var SERVERS = [
@@ -146,10 +191,11 @@
   var ICON_PAUSE = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
 
   function setStatus(t) { $('status').textContent = t || ''; }
+  function showLoading() { $('play').style.display = 'none'; $('status').innerHTML = '<div class="spinner"></div>'; }
 
-  function showLoading() {
-    $('play').style.display = 'none';
-    $('status').innerHTML = '<div class="spinner" style="margin:6px auto"></div>';
+  function toast(msg) {
+    var t = $('toast'); t.textContent = msg; t.classList.add('show');
+    setTimeout(function () { t.classList.remove('show'); }, 1800);
   }
 
   function fetchStation(id) {
@@ -165,24 +211,78 @@
     return tryNext();
   }
 
-  function countClick(id) {
-    // Best-effort play-count registration (does not block playback).
-    try { fetch(SERVERS[0] + '/json/url/' + encodeURIComponent(id)); } catch (e) {}
-  }
+  function countClick(id) { try { fetch(SERVERS[0] + '/json/url/' + encodeURIComponent(id)); } catch (e) {} }
 
   function link(label, href, primary) {
     var a = document.createElement('a');
     a.className = 'btn' + (primary ? ' primary' : '');
-    a.href = href; a.target = '_blank'; a.rel = 'noopener';
-    a.textContent = label;
+    a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = label;
     return a;
   }
 
-  function renderNoStation() {
+  // ---- QR (encodes the current page URL) ----
+  var qrCanvas = null;
+  function buildQr() {
+    if (typeof qrcode !== 'function') return; // lib failed to load → keep fallback text
+    try {
+      var qr = qrcode(0, 'M');
+      qr.addData(location.href);
+      qr.make();
+      var count = qr.getModuleCount();
+      var cell = 8, margin = 2;
+      var size = (count + margin * 2) * cell;
+      var cv = document.createElement('canvas');
+      cv.width = size; cv.height = size;
+      var ctx = cv.getContext('2d');
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, size, size);
+      ctx.fillStyle = '#0B1E3D';
+      for (var r = 0; r < count; r++) {
+        for (var c = 0; c < count; c++) {
+          if (qr.isDark(r, c)) ctx.fillRect((c + margin) * cell, (r + margin) * cell, cell, cell);
+        }
+      }
+      var box = $('qrBox');
+      box.innerHTML = '';
+      box.appendChild(cv);
+      qrCanvas = cv;
+    } catch (e) { /* keep fallback */ }
+  }
+
+  function downloadQr() {
+    if (!qrCanvas) { toast('QR indisponible'); return; }
+    try {
+      var a = document.createElement('a');
+      a.href = qrCanvas.toDataURL('image/png');
+      a.download = 'radiowave-' + ((station && station.name) ? station.name.replace(/[^a-z0-9]+/gi, '-').toLowerCase() : 'station') + '.png';
+      document.body.appendChild(a); a.click(); a.remove();
+    } catch (e) { toast('Téléchargement impossible'); }
+  }
+
+  function copyLink() {
+    var url = location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () { toast('Lien copié'); }, function () { toast('Copie impossible'); });
+    } else {
+      try {
+        var t = document.createElement('textarea'); t.value = url; document.body.appendChild(t);
+        t.select(); document.execCommand('copy'); t.remove(); toast('Lien copié');
+      } catch (e) { toast('Copie impossible'); }
+    }
+  }
+
+  function setupShare() {
+    $('urlText').textContent = location.href.replace(/^https?:\/\//, '');
+    $('share').style.display = 'block';
+    buildQr();
+    $('dlQr').addEventListener('click', downloadQr);
+    $('copyLink').addEventListener('click', copyLink);
+  }
+
+  function renderNoStation(title, sub) {
     $('logo').textContent = '📻';
     $('eyebrow').textContent = 'RadioWave';
-    $('name').textContent = 'Radio en ligne';
-    $('meta').textContent = 'Aucune station indiquée dans le lien.';
+    $('name').textContent = title || 'Radio en ligne';
+    $('meta').textContent = sub || 'Aucune station indiquée dans le lien.';
     $('btns').appendChild(link("📲 Installer l'application", PLAY_STORE, true));
   }
 
@@ -191,12 +291,10 @@
     var stream = st.url_resolved || st.url || '';
     var mixed = location.protocol === 'https:' && /^http:\/\//i.test(stream);
 
-    // Logo (favicon). Mixed-content or broken images fall back to the emoji.
     var logo = $('logo');
     if (st.favicon && !(location.protocol === 'https:' && /^http:\/\//i.test(st.favicon))) {
       var img = new Image();
-      img.className = 'logo';
-      img.alt = st.name || '';
+      img.className = 'logo'; img.alt = st.name || '';
       img.onload = function () { logo.replaceWith(img); img.id = 'logo'; };
       img.onerror = function () {};
       img.src = st.favicon;
@@ -214,64 +312,48 @@
     btns.innerHTML = '';
     btns.appendChild(link("📲 Installer l'app RadioWave", PLAY_STORE, false));
 
-    if (!stream) {
-      showFallback("Le flux de cette station est indisponible.");
-      return;
-    }
+    setupShare();
+
+    if (!stream) { showFallback("Le flux de cette station est indisponible."); return; }
 
     audio.src = stream;
-
     var play = $('play');
     play.style.display = 'flex';
-    setStatus(mixed ? 'Touchez pour écouter' : 'Touchez pour écouter');
+    setStatus('Touchez pour écouter');
 
     play.addEventListener('click', function () {
-      if (playing) {
-        audio.pause();
-      } else {
-        showLoadingStatus();
+      if (playing) { audio.pause(); }
+      else {
+        setStatus('Connexion au flux…');
         var p = audio.play();
         if (p && p.catch) p.catch(function () { onPlayFail(stream, mixed); });
         countClick(st.stationuuid || uuid);
       }
     });
-
-    audio.addEventListener('playing', function () {
-      playing = true; $('icon').innerHTML = ICON_PAUSE; setStatus('▶ Lecture en cours');
-    });
-    audio.addEventListener('pause', function () {
-      playing = false; $('icon').innerHTML = ICON_PLAY; setStatus('⏸ En pause');
-    });
-    audio.addEventListener('waiting', function () { showLoadingStatus(); });
-    audio.addEventListener('error', function () { onPlayFail(stream, mixed); });
+    audio.addEventListener('playing', function () { playing = true; $('icon').innerHTML = ICON_PAUSE; setStatus('▶ Lecture en cours'); });
+    audio.addEventListener('pause',   function () { playing = false; $('icon').innerHTML = ICON_PLAY; setStatus('⏸ En pause'); });
+    audio.addEventListener('waiting', function () { setStatus('Connexion au flux…'); });
+    audio.addEventListener('error',   function () { onPlayFail(stream, mixed); });
   }
-
-  function showLoadingStatus() { setStatus('Connexion au flux…'); }
 
   function onPlayFail(stream, mixed) {
     playing = false; $('icon').innerHTML = ICON_PLAY; setStatus('');
     var msg = mixed
-      ? "Cette station diffuse en HTTP non sécurisé : votre navigateur bloque la lecture sur une page HTTPS. Ouvrez le flux directement, ou écoutez-la dans l'application (aucune limite)."
+      ? "Cette station diffuse en HTTP non sécurisé : votre navigateur peut bloquer la lecture. Ouvrez le flux directement, ou écoutez-la dans l'application (aucune limite)."
       : "Impossible de lire cette station dans le navigateur. Essayez d'ouvrir le flux directement, ou écoutez-la dans l'application.";
     showFallback(msg);
     var btns = $('btns');
     if (!document.getElementById('openStream') && stream) {
-      var a = link('▶ Ouvrir le flux directement', stream, false);
-      a.id = 'openStream';
+      var a = link('▶ Ouvrir le flux directement', stream, false); a.id = 'openStream';
       btns.insertBefore(a, btns.firstChild);
     }
     if (station && station.homepage && !document.getElementById('openHome')) {
-      var h = link('🌐 Site de la station', station.homepage, false);
-      h.id = 'openHome';
+      var h = link('🌐 Site de la station', station.homepage, false); h.id = 'openHome';
       btns.appendChild(h);
     }
   }
 
-  function showFallback(text) {
-    var f = $('fallback');
-    f.textContent = text;
-    f.classList.add('show');
-  }
+  function showFallback(text) { var f = $('fallback'); f.textContent = text; f.classList.add('show'); }
 
   // ---- boot ----
   if (!uuid) { renderNoStation(); return; }
@@ -279,12 +361,7 @@
   fetchStation(uuid).then(function (st) {
     $('status').innerHTML = '';
     if (st) renderStation(st);
-    else {
-      $('eyebrow').textContent = 'RadioWave';
-      $('name').textContent = 'Station introuvable';
-      $('meta').textContent = 'Ce lien de station n’est plus valide.';
-      $('btns').appendChild(link("📲 Installer l'application", PLAY_STORE, true));
-    }
+    else renderNoStation('Station introuvable', 'Ce lien de station n’est plus valide.');
   });
 })();
 </script>
