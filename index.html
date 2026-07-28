@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>RadioWave — Écouter en ligne</title>
+<meta name="theme-color" content="#0B1E3D" />
+<meta name="description" content="Écoutez cette station de radio en ligne, sans installation." />
+<!-- Open Graph so the WhatsApp link preview shows a nice card -->
+<meta property="og:title" content="RadioWave — Écouter en ligne" />
+<meta property="og:description" content="Touchez pour écouter cette station directement dans votre navigateur." />
+<meta property="og:type" content="website" />
+<style>
+  :root {
+    --primary: #007AFF;
+    --bg0: #0B1E3D;
+    --bg1: #12294f;
+    --card: rgba(255,255,255,0.06);
+    --line: rgba(255,255,255,0.14);
+    --text: #ffffff;
+    --muted: rgba(255,255,255,0.66);
+    --danger: #FF453A;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: radial-gradient(120% 120% at 50% 0%, var(--bg1) 0%, var(--bg0) 60%, #06132a 100%);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+  }
+  .brand {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 800; font-size: 20px; letter-spacing: .3px;
+    margin-bottom: 22px;
+  }
+  .brand .dot { font-size: 22px; }
+  .card {
+    width: 100%; max-width: 360px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 26px 22px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+  }
+  .logo {
+    width: 148px; height: 148px; border-radius: 22px; object-fit: cover;
+    background: rgba(255,255,255,0.08);
+    border: 3px solid rgba(255,255,255,0.28);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px; margin: 0 auto 16px;
+  }
+  .eyebrow { color: var(--muted); font-size: 13px; font-weight: 600; }
+  .name { font-size: 23px; font-weight: 800; margin: 4px 0 6px; line-height: 1.2; }
+  .meta { color: var(--muted); font-size: 13px; min-height: 18px; }
+  .play {
+    margin: 22px auto 6px;
+    width: 88px; height: 88px; border-radius: 50%;
+    border: none; cursor: pointer;
+    background: var(--primary);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,122,255,0.45);
+    transition: transform .08s ease;
+  }
+  .play:active { transform: scale(0.94); }
+  .play svg { width: 38px; height: 38px; display: block; }
+  .status { color: var(--muted); font-size: 13px; min-height: 18px; margin-top: 8px; }
+  .spinner {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.25); border-top-color: #fff;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .fallback {
+    display: none;
+    margin-top: 16px; padding: 14px;
+    background: rgba(255,69,58,0.12);
+    border: 1px solid rgba(255,69,58,0.35);
+    border-radius: 14px;
+    font-size: 13px; color: #ffd9d6; text-align: left; line-height: 1.5;
+  }
+  .fallback.show { display: block; }
+  .btns { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none; cursor: pointer;
+    padding: 13px 18px; border-radius: 999px; font-size: 15px; font-weight: 700;
+    border: 1px solid var(--line); color: #fff; background: rgba(255,255,255,0.05);
+  }
+  .btn.primary { background: var(--primary); border-color: var(--primary); }
+  .foot { color: var(--muted); font-size: 12px; margin-top: 20px; text-align: center; max-width: 360px; line-height: 1.5; }
+  a { color: #7ab8ff; }
+</style>
+</head>
+<body>
+  <div class="brand"><span class="dot">📻</span><span>RadioWave</span></div>
+
+  <div class="card" id="card">
+    <div class="logo" id="logo">📻</div>
+    <div class="eyebrow" id="eyebrow">Station partagée</div>
+    <div class="name" id="name">Chargement…</div>
+    <div class="meta" id="meta"></div>
+
+    <button class="play" id="play" aria-label="Lecture" style="display:none">
+      <svg id="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <div class="status" id="status"></div>
+
+    <div class="fallback" id="fallback"></div>
+
+    <div class="btns" id="btns"></div>
+  </div>
+
+  <div class="foot">
+    Vous écoutez une seule station.<br/>
+    Installez <b>RadioWave</b> pour accéder à des milliers de radios du monde entier.
+  </div>
+
+  <audio id="audio" preload="none" crossorigin="anonymous"></audio>
+
+<script>
+(function () {
+  var SERVERS = [
+    'https://de1.api.radio-browser.info',
+    'https://nl1.api.radio-browser.info',
+    'https://at1.api.radio-browser.info'
+  ];
+  var PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.radiowavejm.app';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var audio = $('audio');
+  var playing = false;
+  var station = null;
+
+  var params = new URLSearchParams(location.search);
+  var uuid = params.get('s') || params.get('station') || params.get('uuid');
+
+  var ICON_PLAY  = '<path d="M8 5v14l11-7z"/>';
+  var ICON_PAUSE = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+
+  function setStatus(t) { $('status').textContent = t || ''; }
+
+  function showLoading() {
+    $('play').style.display = 'none';
+    $('status').innerHTML = '<div class="spinner" style="margin:6px auto"></div>';
+  }
+
+  function fetchStation(id) {
+    var i = 0;
+    function tryNext() {
+      if (i >= SERVERS.length) return Promise.resolve(null);
+      var base = SERVERS[i++];
+      return fetch(base + '/json/stations/byuuid/' + encodeURIComponent(id))
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (arr) { return (arr && arr[0]) ? arr[0] : tryNext(); })
+        .catch(function () { return tryNext(); });
+    }
+    return tryNext();
+  }
+
+  function countClick(id) {
+    // Best-effort play-count registration (does not block playback).
+    try { fetch(SERVERS[0] + '/json/url/' + encodeURIComponent(id)); } catch (e) {}
+  }
+
+  function link(label, href, primary) {
+    var a = document.createElement('a');
+    a.className = 'btn' + (primary ? ' primary' : '');
+    a.href = href; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = label;
+    return a;
+  }
+
+  function renderNoStation() {
+    $('logo').textContent = '📻';
+    $('eyebrow').textContent = 'RadioWave';
+    $('name').textContent = 'Radio en ligne';
+    $('meta').textContent = 'Aucune station indiquée dans le lien.';
+    $('btns').appendChild(link("📲 Installer l'application", PLAY_STORE, true));
+  }
+
+  function renderStation(st) {
+    station = st;
+    var stream = st.url_resolved || st.url || '';
+    var mixed = location.protocol === 'https:' && /^http:\/\//i.test(stream);
+
+    // Logo (favicon). Mixed-content or broken images fall back to the emoji.
+    var logo = $('logo');
+    if (st.favicon && !(location.protocol === 'https:' && /^http:\/\//i.test(st.favicon))) {
+      var img = new Image();
+      img.className = 'logo';
+      img.alt = st.name || '';
+      img.onload = function () { logo.replaceWith(img); img.id = 'logo'; };
+      img.onerror = function () {};
+      img.src = st.favicon;
+    }
+
+    $('eyebrow').textContent = 'En écoute';
+    $('name').textContent = st.name || 'Station';
+    var bits = [];
+    if (st.country) bits.push(st.country);
+    if (st.tags) bits.push(String(st.tags).split(',')[0]);
+    if (st.bitrate) bits.push(st.bitrate + ' kbps');
+    $('meta').textContent = bits.join('  ·  ');
+
+    var btns = $('btns');
+    btns.innerHTML = '';
+    btns.appendChild(link("📲 Installer l'app RadioWave", PLAY_STORE, false));
+
+    if (!stream) {
+      showFallback("Le flux de cette station est indisponible.");
+      return;
+    }
+
+    audio.src = stream;
+
+    var play = $('play');
+    play.style.display = 'flex';
+    setStatus(mixed ? 'Touchez pour écouter' : 'Touchez pour écouter');
+
+    play.addEventListener('click', function () {
+      if (playing) {
+        audio.pause();
+      } else {
+        showLoadingStatus();
+        var p = audio.play();
+        if (p && p.catch) p.catch(function () { onPlayFail(stream, mixed); });
+        countClick(st.stationuuid || uuid);
+      }
+    });
+
+    audio.addEventListener('playing', function () {
+      playing = true; $('icon').innerHTML = ICON_PAUSE; setStatus('▶ Lecture en cours');
+    });
+    audio.addEventListener('pause', function () {
+      playing = false; $('icon').innerHTML = ICON_PLAY; setStatus('⏸ En pause');
+    });
+    audio.addEventListener('waiting', function () { showLoadingStatus(); });
+    audio.addEventListener('error', function () { onPlayFail(stream, mixed); });
+  }
+
+  function showLoadingStatus() { setStatus('Connexion au flux…'); }
+
+  function onPlayFail(stream, mixed) {
+    playing = false; $('icon').innerHTML = ICON_PLAY; setStatus('');
+    var msg = mixed
+      ? "Cette station diffuse en HTTP non sécurisé : votre navigateur bloque la lecture sur une page HTTPS. Ouvrez le flux directement, ou écoutez-la dans l'application (aucune limite)."
+      : "Impossible de lire cette station dans le navigateur. Essayez d'ouvrir le flux directement, ou écoutez-la dans l'application.";
+    showFallback(msg);
+    var btns = $('btns');
+    if (!document.getElementById('openStream') && stream) {
+      var a = link('▶ Ouvrir le flux directement', stream, false);
+      a.id = 'openStream';
+      btns.insertBefore(a, btns.firstChild);
+    }
+    if (station && station.homepage && !document.getElementById('openHome')) {
+      var h = link('🌐 Site de la station', station.homepage, false);
+      h.id = 'openHome';
+      btns.appendChild(h);
+    }
+  }
+
+  function showFallback(text) {
+    var f = $('fallback');
+    f.textContent = text;
+    f.classList.add('show');
+  }
+
+  // ---- boot ----
+  if (!uuid) { renderNoStation(); return; }
+  showLoading();
+  fetchStation(uuid).then(function (st) {
+    $('status').innerHTML = '';
+    if (st) renderStation(st);
+    else {
+      $('eyebrow').textContent = 'RadioWave';
+      $('name').textContent = 'Station introuvable';
+      $('meta').textContent = 'Ce lien de station n’est plus valide.';
+      $('btns').appendChild(link("📲 Installer l'application", PLAY_STORE, true));
+    }
+  });
+})();
+</script>
+</body>
+</html>
