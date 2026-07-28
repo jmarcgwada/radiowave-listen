@@ -179,6 +179,16 @@
   ];
   var PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.radiowavejm.app';
 
+  // Closed-testing beta: RadioWave is not public on the Play Store yet, so a random visitor's
+  // Google account can't install it until it's on the tester list. Paste your Google Form link
+  // here (1 field = e-mail) to gate install behind "join the beta". Leave '' to keep the plain
+  // Play Store link (behaviour unchanged until the form URL is provided).
+  var BETA_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdxPzT5Cp-8KKWpyLH02q9GzYCoLIRrhKaA4HDmGWVKaXmgbA/viewform';
+  // Optional: Play Console closed-test OPT-IN link (Play Console ▸ your closed track ▸ Testers ▸
+  // "Copy link"). Given to people you've ALREADY added to the tester list — it's what actually
+  // unlocks the install. Falls back to the plain Play Store page if left empty.
+  var BETA_OPTIN_URL = '';
+
   var $ = function (id) { return document.getElementById(id); };
   var audio = $('audio');
   var playing = false;
@@ -218,6 +228,24 @@
     a.className = 'btn' + (primary ? ' primary' : '');
     a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = label;
     return a;
+  }
+
+  // Install call-to-action. During closed testing (BETA_FORM_URL set) the primary action is
+  // "join the beta" (collect the tester's Google e-mail via the form); a secondary link stays
+  // for people already on the tester list. Without a form URL, behaves as a plain install link.
+  function installButtons(container, primary) {
+    if (BETA_FORM_URL) {
+      var note = document.createElement('div');
+      note.style.cssText = 'font-size:12px;color:var(--muted);margin:2px 0 4px;line-height:1.5;text-align:center';
+      note.textContent = "🧪 App en test fermé — laisse ton e-mail Google pour recevoir l'accès, puis installe-la.";
+      container.appendChild(note);
+      container.appendChild(link('🧪 Rejoindre la bêta', BETA_FORM_URL, primary));
+      var store = link('Déjà testeur ? Ouvrir le Play Store', BETA_OPTIN_URL || PLAY_STORE, false);
+      store.className += ' small';
+      container.appendChild(store);
+    } else {
+      container.appendChild(link("📲 Installer l'app RadioWave", PLAY_STORE, primary));
+    }
   }
 
   // ---- QR (encodes the current page URL) ----
@@ -283,7 +311,7 @@
     $('eyebrow').textContent = 'RadioWave';
     $('name').textContent = title || 'Radio en ligne';
     $('meta').textContent = sub || 'Aucune station indiquée dans le lien.';
-    $('btns').appendChild(link("📲 Installer l'application", PLAY_STORE, true));
+    installButtons($('btns'), true);
   }
 
   function renderStation(st) {
@@ -310,7 +338,7 @@
 
     var btns = $('btns');
     btns.innerHTML = '';
-    btns.appendChild(link("📲 Installer l'app RadioWave", PLAY_STORE, false));
+    installButtons(btns, false);
 
     setupShare();
 
