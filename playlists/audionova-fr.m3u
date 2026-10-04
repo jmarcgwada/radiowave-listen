@@ -63,8 +63,6 @@ https://video1.getstreamhosting.com:1936/8250/8250/manifest.m3u8
 https://stream.sen-gt.com/A2iReligion/myStream/playlist.m3u8
 #EXTINF:-1 group-title="Général · Francophone",A2i TV (1080p)
 https://stream.sen-gt.com/A2itv/myStream/playlist.m3u8
-#EXTINF:-1 group-title="Général · Francophone",ACTV (Belgium) (504p)
-https://dlgt0tdl2hpq3.cloudfront.net/rtbf/clr-rtbf/4db788c7/index.m3u8
 #EXTINF:-1 group-title="Général · France",ADN TV+ (720p)
 https://d3b73b34o7cvkq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gz2sgqzp076kf/adn.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Afro Magic Channel
@@ -79,8 +77,6 @@ https://edge13.vedge.infomaniak.com/livecast/ik:adhtv/manifest.m3u8
 https://tv.voozmedia.fun/benietv/index.m3u8
 #EXTINF:-1 group-title="Général · France",Brionnais TV (720p)
 https://stream2.mandarine.media/brionnaistv/brionnaistv/playlist.m3u8
-#EXTINF:-1 group-title="Général · Francophone",BX1 (504p)
-https://dlgt0tdl2hpq3.cloudfront.net/rtbf/clr-rtbf/7ec67c8d/index.m3u8
 #EXTINF:-1 group-title="Général · Francophone",CAM 10 TV (720p)
 https://stream.it-innov.com/cam10tv/index.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Canaf54 TV
@@ -95,8 +91,6 @@ https://onefmhd.vedge.infomaniak.com/livecast/ik:onefmhd/manifest.m3u8
 https://lfmhd.vedge.infomaniak.com/livecast/lfmhd/playlist.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Carac 4 (1080p)
 https://edge17.vedge.infomaniak.com/livecast/ik:compack_media_1/playlist.m3u8
-#EXTINF:-1 group-title="Général · Francophone",Carac 5
-https://lfmmd.vedge.infomaniak.com/livecast/ik:carac5/manifest.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Champion TV
 https://stream.berosat.live/hls/champion-tv/champion-tv.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Chandel TV (720p)
@@ -161,8 +155,6 @@ https://video1.getstreamhosting.com:1936/8282/8282/playlist.m3u8
 https://stream.sen-gt.com/Mbacke/myStream/playlist.m3u8
 #EXTINF:-1 group-title="Général · France",M6 HD (1080p)
 http://99.27.51.147:8080/M6/index.m3u8
-#EXTINF:-1 group-title="Général · Francophone",Mana Eglise Online (1080p) [Not 24/7]
-https://w2.manasat.com/eglise-online/smil:eglise-online.smil/playlist.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Matele (1080p) [Not 24/7]
 https://live.matele.be/hls/live.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Max TV (1080p)
@@ -201,8 +193,6 @@ https://jmp2.uk/plu-5f8ed3892ed7bb000741a1d2.m3u8
 https://jmp2.uk/plu-6092544e7639460007d4835e.m3u8
 #EXTINF:-1 group-title="Général · France",Pluto TV Telerealite France
 https://jmp2.uk/plu-699865ccac36b147e74619fe.m3u8
-#EXTINF:-1 group-title="Général · Francophone",Radio Tele 4VEH (720p)
-https://uni01rtmp.tulix.tv/4vehtv/4vehtv-firetv/playlist.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Radio Tele Evangile Sans Limite
 https://5790d294af2dc.streamlock.net/8124/8124/chunklist.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Radio Tele Full Gospel
@@ -213,10 +203,12 @@ http://teleginen.srfms.com:1935/teleginen/livestream/playlist.m3u8
 https://5dcab9aed5331.streamlock.net/mrcompas1/livestream/playlist.m3u8
 #EXTINF:-1 group-title="Général · Francophone",Radio Tele Puissance
 https://video1.getstreamhosting.com:1936/8560/8560/playlist.m3u8
+#EXTINF:-1 group-title="Général · Francophone",Radio Tele Sentinel
+https://59d39900ebfb8.streamlock.net/radiotelesentinel/radiotelesentinel/playlist.m3u8
+#EXTINF:-1 group-title="Général · France",RFM TV [Not 24/7]
+http://315e5a5d.ottrast.com/iptv/MM4E93NGF5LADZ/1038/index.m3u8
 #EXTINF:-1 group-title="Général · France",Ridiculousness (Germany) (720p)
 https://jmp2.uk/plu-5f8eb8a8b2619a000710605c.m3u8
-#EXTINF:-1 group-title="Général · France",RMC Story (1080p)
-https://d15aro46bnpfm8.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-fqkqiax1078up/RMC_Story_FR.m3u8
 #EXTINF:-1 group-title="Général · France",SciFi (720p)
 http://41.205.93.154/SYFY/index.m3u8
 #EXTINF:-1 group-title="Général · France",T18 (1080p)
@@ -283,6 +275,8 @@ http://stream.mcquack.net/276/index.m3u8
 https://vdo2.pro-fhi.net:3207/stream/play.m3u8
 #EXTINF:-1 group-title="Musique · Francophone",Play TV (Cameroon) (720p) [Not 24/7]
 http://connectiktv.ddns.net:5000/playtv/@playtv/playlist.m3u8
+#EXTINF:-1 group-title="Musique · Francophone",Radio Tele Hit (480p)
+https://59d39900ebfb8.streamlock.net/RadioTelehit/RadioTelehit/playlist.m3u8
 #EXTINF:-1 group-title="Musique · France",Trace Africa (1080p)
 https://channels.trace.plus/Traceprod/AFRICA_FR_hd/index.m3u8
 #EXTINF:-1 group-title="Musique · France",Trace Afrikora (1080p)
@@ -379,8 +373,8 @@ https://jmp2.uk/plu-5f8ed2d1c34c2300073bf02c.m3u8
 https://06cb85ad6ccb4a6b97f561e62d16ad3f.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-822-FR-SONYONETHEBLACKLIST-LG_FR/playlist.m3u8
 #EXTINF:-1 group-title="Cinéma · France",Sony One Favoris (1080p)
 https://49d735318d6b4c30a24a7997ea594e1b.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-820-FR-SONYONEFAVORIS-LG_FR/playlist.m3u8
-#EXTINF:-1 group-title="Cinéma · France",Sony One Hits Comedie (1080p)
-https://7aa9671895264ec9a384dfed1b992171.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-818-FR-SONYONEHITSCOMDIE-LG_FR/playlist.m3u8
+#EXTINF:-1 group-title="Cinéma · France",Sony One Hits Action (1080p)
+https://5098a8b860504a3690fd2e7c0a18d68f.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-817-FR-SONYONEHITSACTION-LG_FR/playlist.m3u8
 #EXTINF:-1 group-title="Cinéma · France",Tout le monde deteste Chris
 https://jmp2.uk/plu-67b4b4a21a5ca760802d25fd.m3u8
 #EXTINF:-1 group-title="Cinéma · France",True Crime by Pluto TV
@@ -395,12 +389,16 @@ https://cdn.fast.jwp.services/v1/channel/1_jB6940Ei_TvhvIHDL/manifest.m3u8
 https://jmp2.uk/plu-66588931a3865300085ca800.m3u8
 #EXTINF:-1 group-title="Enfants · France",Detective Conan France (720p)
 https://jmp2.uk/plu-62f3e8ad2a8e8000077b013d.m3u8
+#EXTINF:-1 group-title="Enfants · France",Disney Jr. (France) (1080p)
+http://151.80.18.177:86/Disney_Junior_HD/index.m3u8
 #EXTINF:-1 group-title="Enfants · France",Gulli
 http://99.27.51.147:8080/Gulli/index.m3u8
 #EXTINF:-1 group-title="Enfants · France",Inazuma Eleven
 https://jmp2.uk/plu-632c6df43d2bc5000751f621.m3u8
 #EXTINF:-1 group-title="Enfants · Francophone",JapanimTV (1080p)
 https://foxkidstv.be:3369/stream/play.m3u8
+#EXTINF:-1 group-title="Enfants · France",Nickelodeon Junior (1080p)
+http://151.80.18.177:86/Nickelodeon_Junior/index.m3u8
 #EXTINF:-1 group-title="Enfants · France",Pluto TV Kids Classics FR (720p)
 https://jmp2.uk/plu-654a58dbf9cc82000868f0fb.m3u8
 #EXTINF:-1 group-title="Enfants · France",Pluto TV Kids Club (Germany)
